@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vikram Partap Singh</title>
+  <style>
+    /* Reset defaults */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      height: 100vh;
+      background-color: #00b050; /* Green background */
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      font-family: Verdana, Geneva, sans-serif;
+      color: white;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    /* Light bulb emoji substitute */
+    .bulb {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+      animation: glow 1s infinite alternate;
+    }
+
+    @keyframes glow {
+      from { text-shadow: 0 0 10px #fff; }
+      to { text-shadow: 0 0 25px #fff, 0 0 50px #fff; }
+    }
+
+    h2 {
+      font-size: clamp(1rem, 2.5vw, 3rem);
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+
+      /* ✨ Fancy shadow like your design */
+      text-shadow:
+        0 3px 10px rgba(0, 0, 0, 0.5),
+        0 5px 25px rgba(0, 0, 0, 0.3),
+        0 0 20px rgba(255, 255, 255, 0.2);
+    }
+
+    h1 {
+      font-size: clamp(6rem, 6vw, 5rem);
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 2rem;
+
+      /* ✨ Fancy shadow like your design */
+      text-shadow:
+        0 3px 10px rgba(0, 0, 0, 0.5),
+        0 5px 25px rgba(0, 0, 0, 0.3),
+        0 0 20px rgba(255, 255, 255, 0.2);
+      }
+
+    .footer {
+      position: absolute;
+      bottom: 40px;
+      font-size: clamp(0.8rem, 1.8vw, 1rem);
+      line-height: 1.6;
+    }
+
+    a {
+      color: white;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="bulb">💡</div>
+  <h2>Stay Tuned</h2>
+  <h1>Coming<br>Soon</h1>
+
+  <div class="footer">
+    <a href="https://x.com/vikrampartap_" target="_blank">x.com/vikrampartap_</a><br>
+    <a href="mailto:vikrampartap@gmail.com">vikrampartap@gmail.com</a>
+  </div>
+</body>
+</html>
