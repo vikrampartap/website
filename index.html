@@ -2,94 +2,1071 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Vikram Partap Singh</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Vikram Partap | Market Research &amp; Data Analyst</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&family=Outfit:wght@200;300;400;500&display=swap" rel="stylesheet"/>
   <style>
-    /* Reset defaults */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    :root {
+      --gold:        #a8832a;
+      --gold-light:  #c9a84c;
+      --gold-pale:   rgba(168,131,42,0.08);
+      --bg:          #f5f2eb;
+      --bg2:         #ede9e0;
+      --bg3:         #e4dfd4;
+      --text:        #1a2e1e;
+      --text-muted:  #4a6352;
+      --text-dim:    #8fa898;
+      --border:      rgba(168,131,42,0.30);
+      --border-dim:  rgba(30,60,35,0.10);
     }
+
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
 
     body {
-      height: 100vh;
-      background-color: #00b050; /* Green background */
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      font-family: Verdana, Geneva, sans-serif;
-      color: white;
-      text-align: center;
-      overflow: hidden;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Outfit', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+      cursor: none;
     }
 
-    /* Light bulb emoji substitute */
-    .bulb {
-      font-size: 4rem;
-      margin-bottom: 1rem;
-      animation: glow 1s infinite alternate;
+    /* ── CURSOR ── */
+    #cursor {
+      position:fixed; top:0; left:0;
+      width:10px; height:10px;
+      background: var(--gold);
+      border-radius:50%;
+      pointer-events:none;
+      z-index:9999;
+      transition: transform 0.1s ease;
+      mix-blend-mode: multiply;
+    }
+    #cursor-ring {
+      position:fixed; top:0; left:0;
+      width:36px; height:36px;
+      border:1px solid rgba(168,131,42,0.55);
+      border-radius:50%;
+      pointer-events:none;
+      z-index:9998;
+      transition: transform 0.18s ease, width 0.25s ease, height 0.25s ease, opacity 0.25s ease;
+    }
+    body.cursor-hover #cursor       { transform:translate(-50%,-50%) scale(2.2); }
+    body.cursor-hover #cursor-ring  { width:56px; height:56px; opacity:0.4; }
+
+    /* ── NAV ── */
+    nav {
+      position:fixed; top:0; left:0; right:0;
+      z-index:100;
+      display:flex; align-items:center; justify-content:space-between;
+      padding:1.4rem 4rem;
+      background:rgba(245,242,235,0.85);
+      backdrop-filter:blur(18px);
+      border-bottom:1px solid var(--border-dim);
+      transition:background 0.4s;
+    }
+    .nav-logo {
+      font-family:'Cormorant Garamond',serif;
+      font-size:1.5rem; font-weight:600;
+      letter-spacing:0.04em;
+      color:var(--gold); text-decoration:none;
+    }
+    .nav-links { display:flex; gap:2.4rem; list-style:none; }
+    .nav-links a {
+      font-family:'DM Mono',monospace;
+      font-size:0.72rem; letter-spacing:0.12em;
+      text-transform:uppercase;
+      color:var(--text-muted); text-decoration:none;
+      transition:color 0.3s; position:relative;
+    }
+    .nav-links a::after {
+      content:''; position:absolute; bottom:-4px; left:0; right:0;
+      height:1px; background:var(--gold);
+      transform:scaleX(0); transform-origin:left;
+      transition:transform 0.35s cubic-bezier(0.4,0,0.2,1);
+    }
+    .nav-links a:hover { color:var(--gold); }
+    .nav-links a:hover::after { transform:scaleX(1); }
+    .nav-cta {
+      font-family:'DM Mono',monospace;
+      font-size:0.72rem; letter-spacing:0.12em;
+      text-transform:uppercase;
+      padding:0.6rem 1.4rem;
+      border:1px solid var(--border);
+      color:var(--gold); text-decoration:none;
+      transition:background 0.3s, color 0.3s;
+    }
+    .nav-cta:hover { background:var(--gold); color:var(--bg); }
+
+    /* ── HERO ── */
+    #hero {
+      min-height:100vh;
+      display:flex; align-items:center;
+      position:relative; padding:0 4rem; overflow:hidden;
+    }
+    .hero-bg {
+      position:absolute; inset:0;
+      background:
+        radial-gradient(ellipse 60% 50% at 70% 50%, rgba(168,131,42,0.07) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 60% at 20% 80%, rgba(200,220,205,0.45) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 40% at 85% 15%, rgba(168,131,42,0.05) 0%, transparent 60%);
+    }
+    .grid-lines {
+      position:absolute; inset:0;
+      background-image:
+        linear-gradient(rgba(30,60,35,0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(30,60,35,0.05) 1px, transparent 1px);
+      background-size:80px 80px;
+      animation:gridShift 20s linear infinite;
+    }
+    @keyframes gridShift {
+      0%   { transform:translateY(0); }
+      100% { transform:translateY(80px); }
+    }
+    .particles { position:absolute; inset:0; pointer-events:none; }
+    .particle {
+      position:absolute; width:2px; height:2px;
+      background:var(--gold); border-radius:50%;
+      opacity:0;
+      animation:floatParticle var(--dur) ease-in-out var(--delay) infinite;
+    }
+    @keyframes floatParticle {
+      0%   { opacity:0; transform:translateY(0) translateX(0); }
+      20%  { opacity:0.5; }
+      80%  { opacity:0.2; }
+      100% { opacity:0; transform:translateY(-120px) translateX(var(--dx)); }
+    }
+    .hero-content { position:relative; z-index:2; max-width:800px; }
+    .hero-eyebrow { display:flex; align-items:center; gap:1rem; margin-bottom:1.8rem; }
+    .hero-eyebrow span {
+      font-family:'DM Mono',monospace; font-size:0.7rem;
+      letter-spacing:0.2em; text-transform:uppercase; color:var(--gold);
+    }
+    .eyebrow-line { width:40px; height:1px; background:linear-gradient(90deg,var(--gold),transparent); }
+    .hero-title {
+      font-family:'Cormorant Garamond',serif;
+      font-size:clamp(3.5rem,8vw,7rem);
+      font-weight:300; line-height:1.0; letter-spacing:-0.01em; margin-bottom:0.3rem;
+    }
+    .hero-title em { font-style:italic; color:var(--gold); }
+    .hero-title .line2 { display:block; font-weight:600; font-size:clamp(3rem,7vw,6.2rem); }
+    .hero-subtitle {
+      margin-top:1.4rem; font-size:1.05rem;
+      color:var(--text-muted); font-weight:300; line-height:1.7; max-width:520px;
+    }
+    .hero-tags { display:flex; flex-wrap:wrap; gap:0.6rem; margin-top:2rem; }
+    .hero-tag {
+      font-family:'DM Mono',monospace; font-size:0.65rem;
+      letter-spacing:0.15em; text-transform:uppercase;
+      padding:0.4rem 0.9rem; border:1px solid var(--border);
+      color:var(--text-muted); background:var(--gold-pale); transition:all 0.3s;
+    }
+    .hero-tag:hover { border-color:var(--gold); color:var(--gold); }
+    .hero-ctas { display:flex; gap:1.2rem; align-items:center; margin-top:2.8rem; }
+    .btn-primary {
+      font-family:'DM Mono',monospace; font-size:0.75rem;
+      letter-spacing:0.14em; text-transform:uppercase;
+      padding:1rem 2.4rem; background:var(--gold); color:#fff;
+      text-decoration:none; font-weight:500; transition:all 0.3s;
+      position:relative; overflow:hidden;
+    }
+    .btn-primary::before {
+      content:''; position:absolute; inset:0;
+      background:rgba(255,255,255,0.15);
+      transform:translateX(-100%);
+      transition:transform 0.4s cubic-bezier(0.4,0,0.2,1);
+    }
+    .btn-primary:hover::before { transform:translateX(0); }
+    .btn-secondary {
+      font-family:'DM Mono',monospace; font-size:0.75rem;
+      letter-spacing:0.14em; text-transform:uppercase;
+      color:var(--text-muted); text-decoration:none;
+      display:flex; align-items:center; gap:0.6rem; transition:color 0.3s;
+    }
+    .btn-secondary svg { transition:transform 0.3s; }
+    .btn-secondary:hover { color:var(--gold); }
+    .btn-secondary:hover svg { transform:translateX(6px); }
+
+    /* ── SECTIONS ── */
+    section { padding:7rem 4rem; }
+    .section-label { display:flex; align-items:center; gap:1rem; margin-bottom:1rem; }
+    .section-label span {
+      font-family:'DM Mono',monospace; font-size:0.66rem;
+      letter-spacing:0.2em; text-transform:uppercase; color:var(--gold);
+    }
+    .section-label::before { content:''; display:block; width:24px; height:1px; background:var(--gold); }
+    .section-title {
+      font-family:'Cormorant Garamond',serif;
+      font-size:clamp(2.4rem,5vw,4rem); font-weight:300; line-height:1.1; margin-bottom:1rem;
+    }
+    .section-title em { font-style:italic; color:var(--gold); }
+
+    /* ── ABOUT ── */
+    #about { background:var(--bg2); }
+    .about-grid {
+      display:grid; grid-template-columns:1fr 1.2fr;
+      gap:6rem; align-items:start; margin-top:4rem;
+    }
+    .about-left { position:relative; }
+    .about-portrait {
+      width:100%; aspect-ratio:3/4;
+      background:var(--bg3); border:1px solid var(--border);
+      display:flex; align-items:center; justify-content:center;
+      position:relative; overflow:hidden;
+    }
+    .portrait-initials {
+      font-family:'Cormorant Garamond',serif; font-size:8rem; font-weight:300;
+      color:rgba(168,131,42,0.18); letter-spacing:0.1em;
+      transition:color 0.4s, transform 0.4s;
+    }
+    .about-portrait:hover .portrait-initials { color:rgba(168,131,42,0.38); transform:scale(1.05); }
+    .portrait-corner {
+      position:absolute; width:24px; height:24px;
+      border-color:var(--gold); border-style:solid;
+    }
+    .portrait-corner.tl { top:14px; left:14px;     border-width:1px 0 0 1px; }
+    .portrait-corner.br { bottom:14px; right:14px;  border-width:0 1px 1px 0; }
+    .about-stat-row { display:flex; gap:2rem; margin-top:1.5rem; }
+    .about-stat {
+      flex:1; padding:1.2rem; border:1px solid var(--border-dim);
+      background:var(--gold-pale); text-align:center; transition:border-color 0.3s;
+    }
+    .about-stat:hover { border-color:var(--border); }
+    .about-stat-num {
+      font-family:'Cormorant Garamond',serif; font-size:2.2rem;
+      font-weight:600; color:var(--gold);
+    }
+    .about-stat-label {
+      font-family:'DM Mono',monospace; font-size:0.6rem;
+      letter-spacing:0.15em; text-transform:uppercase; color:var(--text-muted); margin-top:0.2rem;
+    }
+    .about-right p { font-size:1.05rem; line-height:1.85; color:var(--text-muted); margin-bottom:1.4rem; }
+    .about-right p strong { color:var(--text); font-weight:400; }
+    .skills-grid { display:grid; grid-template-columns:1fr 1fr; gap:0.8rem; margin-top:2rem; }
+    .skill-chip {
+      display:flex; align-items:center; gap:0.7rem;
+      padding:0.8rem 1rem; border:1px solid var(--border-dim);
+      background:var(--gold-pale); transition:all 0.3s;
+    }
+    .skill-chip:hover { border-color:var(--border); transform:translateX(4px); }
+    .skill-dot { width:5px; height:5px; border-radius:50%; background:var(--gold); flex-shrink:0; }
+    .skill-chip span {
+      font-family:'DM Mono',monospace; font-size:0.68rem;
+      letter-spacing:0.08em; color:var(--text-muted);
     }
 
-    @keyframes glow {
-      from { text-shadow: 0 0 10px #fff; }
-      to { text-shadow: 0 0 25px #fff, 0 0 50px #fff; }
+    /* ── SERVICES ── */
+    #services { background:var(--bg); }
+    .services-grid {
+      display:grid; grid-template-columns:repeat(3,1fr);
+      gap:1.5px; margin-top:4rem;
+      background:var(--border-dim); border:1px solid var(--border-dim);
+    }
+    .service-card {
+      background:var(--bg); padding:2.8rem 2.4rem;
+      transition:background 0.4s; position:relative; overflow:hidden;
+    }
+    .service-card::before {
+      content:''; position:absolute; top:0; left:0; right:0; height:2px;
+      background:linear-gradient(90deg,var(--gold),transparent);
+      transform:scaleX(0); transform-origin:left;
+      transition:transform 0.5s cubic-bezier(0.4,0,0.2,1);
+    }
+    .service-card:hover { background:var(--bg3); }
+    .service-card:hover::before { transform:scaleX(1); }
+    .service-icon {
+      width:48px; height:48px; border:1px solid var(--border);
+      display:flex; align-items:center; justify-content:center;
+      margin-bottom:1.8rem; transition:border-color 0.3s, background 0.3s;
+    }
+    .service-card:hover .service-icon { border-color:var(--gold); background:var(--gold-pale); }
+    .service-icon svg { width:22px; height:22px; stroke:var(--gold); fill:none; stroke-width:1.5; }
+    .service-num {
+      font-family:'DM Mono',monospace; font-size:0.6rem;
+      letter-spacing:0.2em; color:var(--text-dim); margin-bottom:0.6rem;
+    }
+    .service-name {
+      font-family:'Cormorant Garamond',serif; font-size:1.6rem;
+      font-weight:400; margin-bottom:0.8rem; color:var(--text); transition:color 0.3s;
+    }
+    .service-card:hover .service-name { color:var(--gold); }
+    .service-desc { font-size:0.88rem; color:var(--text-muted); line-height:1.75; }
+
+    /* ── REPORTS ── */
+    #reports { background:var(--bg); }
+    .reports-grid {
+      display:grid; grid-template-columns:1.4fr 1fr;
+      gap:1.5px; background:var(--border-dim);
+      border:1px solid var(--border-dim); margin-top:4rem;
+    }
+    .report-card { background:var(--bg); padding:2.4rem; transition:background 0.3s; }
+    .report-card:hover { background:var(--bg3); }
+    .report-card.featured { grid-row:span 2; }
+    .report-tag {
+      display:inline-flex; font-family:'DM Mono',monospace;
+      font-size:0.6rem; letter-spacing:0.14em; text-transform:uppercase;
+      padding:0.3rem 0.7rem; border:1px solid var(--border);
+      color:var(--gold); margin-bottom:1.2rem;
+    }
+    .report-title {
+      font-family:'Cormorant Garamond',serif; font-size:1.5rem;
+      font-weight:400; line-height:1.3; margin-bottom:0.8rem; transition:color 0.3s;
+    }
+    .report-card:hover .report-title { color:var(--gold); }
+    .report-card.featured .report-title { font-size:2rem; }
+    .report-meta {
+      font-family:'DM Mono',monospace; font-size:0.62rem;
+      letter-spacing:0.08em; color:var(--text-dim); margin-bottom:1rem;
+    }
+    .report-desc { font-size:0.9rem; color:var(--text-muted); line-height:1.7; margin-bottom:1.4rem; }
+    .report-link {
+      font-family:'DM Mono',monospace; font-size:0.65rem;
+      letter-spacing:0.12em; text-transform:uppercase; color:var(--gold);
+      text-decoration:none; display:inline-flex; align-items:center; gap:0.5rem; transition:gap 0.3s;
+    }
+    .report-link:hover { gap:0.9rem; }
+    .report-divider { width:100%; height:1px; background:var(--border-dim); margin:1.4rem 0; }
+
+    /* ── QUANT ── */
+    #quant { background:var(--bg); position:relative; overflow:hidden; }
+    .quant-intro {
+      max-width:640px; font-size:1.02rem; color:var(--text-muted);
+      line-height:1.85; margin-top:1.6rem;
+    }
+    .quant-stat-band {
+      display:grid; grid-template-columns:repeat(4,1fr);
+      gap:1.5px; margin-top:3.5rem;
+      background:var(--border-dim); border:1px solid var(--border-dim);
+    }
+    .quant-stat-card {
+      background:var(--bg2); padding:2.2rem 1.6rem; text-align:center;
+      transition:background 0.4s;
+    }
+    .quant-stat-card:hover { background:var(--gold-pale); }
+    .quant-stat-num {
+      font-family:'Cormorant Garamond',serif; font-size:2.6rem;
+      font-weight:600; color:var(--gold); line-height:1;
+    }
+    .quant-stat-label {
+      font-family:'DM Mono',monospace; font-size:0.62rem;
+      letter-spacing:0.14em; text-transform:uppercase;
+      color:var(--text-muted); margin-top:0.8rem; line-height:1.5;
+    }
+    .quant-features {
+      display:grid; grid-template-columns:repeat(3,1fr);
+      gap:1.5px; margin-top:1.5px;
+      background:var(--border-dim); border:1px solid var(--border-dim); border-top:none;
+    }
+    .quant-feature {
+      background:var(--bg2); padding:2.4rem 1.8rem;
+      transition:background 0.35s; position:relative; overflow:hidden;
+    }
+    .quant-feature::before {
+      content:''; position:absolute; top:0; left:0; right:0; height:2px;
+      background:linear-gradient(90deg,var(--gold),transparent);
+      transform:scaleX(0); transform-origin:left;
+      transition:transform 0.5s cubic-bezier(0.4,0,0.2,1);
+    }
+    .quant-feature:hover { background:var(--bg3); }
+    .quant-feature:hover::before { transform:scaleX(1); }
+    .quant-feature-icon {
+      width:40px; height:40px; border:1px solid var(--border);
+      display:flex; align-items:center; justify-content:center;
+      margin-bottom:1.2rem; transition:border-color 0.3s, background 0.3s;
+    }
+    .quant-feature:hover .quant-feature-icon { border-color:var(--gold); background:var(--gold-pale); }
+    .quant-feature-icon svg { width:19px; height:19px; stroke:var(--gold); fill:none; stroke-width:1.5; }
+    .quant-feature-title {
+      font-family:'Cormorant Garamond',serif; font-size:1.25rem;
+      font-weight:400; margin-bottom:0.6rem; color:var(--text);
+    }
+    .quant-feature-desc { font-size:0.86rem; color:var(--text-muted); line-height:1.7; }
+    .quant-note {
+      margin-top:2rem; font-family:'DM Mono',monospace; font-size:0.68rem;
+      letter-spacing:0.05em; color:var(--text-dim); line-height:1.8;
+      border-left:2px solid var(--border); padding-left:1.2rem;
     }
 
-    h2 {
-      font-size: clamp(1rem, 2.5vw, 3rem);
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-
-      /* ✨ Fancy shadow like your design */
-      text-shadow:
-        0 3px 10px rgba(0, 0, 0, 0.5),
-        0 5px 25px rgba(0, 0, 0, 0.3),
-        0 0 20px rgba(255, 255, 255, 0.2);
+    /* ── ALGO ── */
+    #algo { background:var(--bg2); position:relative; overflow:hidden; }
+    .algo-bg-code {
+      position:absolute; right:-2rem; top:50%; transform:translateY(-50%);
+      font-family:'DM Mono',monospace; font-size:0.7rem;
+      color:rgba(30,60,35,0.05); white-space:pre; line-height:1.6;
+      pointer-events:none; letter-spacing:0.05em; user-select:none;
     }
-
-    h1 {
-      font-size: clamp(6rem, 6vw, 5rem);
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      margin-bottom: 2rem;
-
-      /* ✨ Fancy shadow like your design */
-      text-shadow:
-        0 3px 10px rgba(0, 0, 0, 0.5),
-        0 5px 25px rgba(0, 0, 0, 0.3),
-        0 0 20px rgba(255, 255, 255, 0.2);
-      }
-
-    .footer {
-      position: absolute;
-      bottom: 40px;
-      font-size: clamp(0.8rem, 1.8vw, 1rem);
-      line-height: 1.6;
+    .algo-grid {
+      display:grid; grid-template-columns:1fr 1fr;
+      gap:5rem; align-items:center; margin-top:4rem;
     }
-
-    a {
-      color: white;
-      text-decoration: none;
+    .code-window { background:var(--bg); border:1px solid var(--border); overflow:hidden; }
+    .code-titlebar {
+      background:var(--bg3); padding:0.7rem 1.2rem;
+      display:flex; align-items:center; gap:0.5rem;
+      border-bottom:1px solid var(--border-dim);
     }
+    .code-dot { width:9px; height:9px; border-radius:50%; }
+    .code-dot.r { background:#e05555; }
+    .code-dot.y { background:var(--gold); }
+    .code-dot.g { background:#4caf7d; }
+    .code-filename {
+      font-family:'DM Mono',monospace; font-size:0.62rem;
+      color:var(--text-muted); margin-left:0.8rem; letter-spacing:0.06em;
+    }
+    .code-body {
+      padding:1.8rem; font-family:'DM Mono',monospace;
+      font-size:0.72rem; line-height:1.85; letter-spacing:0.03em;
+    }
+    .kw  { color:#3b6ea5; }
+    .fn  { color:#2d7a3a; }
+    .str { color:#b05a00; }
+    .cm  { color:#8fa898; }
+    .num { color:#c44f00; }
+    .cl  { color:#6b4fa0; }
 
-    a:hover {
-      text-decoration: underline;
+    .algo-features { display:flex; flex-direction:column; gap:1.4rem; }
+    .algo-feature {
+      display:flex; align-items:flex-start; gap:1.2rem;
+      padding:1.4rem; border:1px solid var(--border-dim);
+      background:var(--bg); transition:all 0.35s;
+    }
+    .algo-feature:hover { border-color:var(--border); background:var(--gold-pale); transform:translateX(6px); }
+    .algo-feature-icon {
+      width:38px; height:38px; flex-shrink:0;
+      display:flex; align-items:center; justify-content:center; border:1px solid var(--border);
+    }
+    .algo-feature-icon svg { width:18px; height:18px; stroke:var(--gold); fill:none; stroke-width:1.5; }
+    .algo-feature-title { font-family:'Cormorant Garamond',serif; font-size:1.1rem; font-weight:400; margin-bottom:0.3rem; }
+    .algo-feature-desc  { font-size:0.84rem; color:var(--text-muted); line-height:1.6; }
+
+    /* ── CONTACT ── */
+    #contact { background:var(--bg); position:relative; overflow:hidden; }
+    .contact-bg {
+      position:absolute; inset:0;
+      background:radial-gradient(ellipse 50% 70% at 80% 50%, rgba(168,131,42,0.07) 0%, transparent 70%);
+    }
+    .contact-grid {
+      display:grid; grid-template-columns:1fr 1fr;
+      gap:6rem; align-items:start; margin-top:4rem; position:relative;
+    }
+    .contact-left p { font-size:1rem; color:var(--text-muted); line-height:1.8; margin-bottom:2rem; }
+    .contact-item {
+      display:flex; align-items:center; gap:1rem;
+      padding:1rem 0; border-bottom:1px solid var(--border-dim); transition:border-color 0.3s;
+    }
+    .contact-item:hover { border-color:var(--border); }
+    .contact-item-icon {
+      width:36px; height:36px; border:1px solid var(--border);
+      display:flex; align-items:center; justify-content:center; flex-shrink:0;
+    }
+    .contact-item-icon svg { width:16px; height:16px; stroke:var(--gold); fill:none; stroke-width:1.5; }
+    .contact-item-label {
+      font-family:'DM Mono',monospace; font-size:0.6rem;
+      letter-spacing:0.12em; text-transform:uppercase; color:var(--text-dim);
+    }
+    .contact-item-val { font-size:0.92rem; color:var(--text); text-decoration:none; transition:color 0.3s; }
+    .contact-item-val:hover { color:var(--gold); }
+    .contact-form { display:flex; flex-direction:column; gap:1rem; }
+    .form-group   { display:flex; flex-direction:column; gap:0.4rem; }
+    .form-group label {
+      font-family:'DM Mono',monospace; font-size:0.6rem;
+      letter-spacing:0.15em; text-transform:uppercase; color:var(--text-dim);
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      background:var(--bg2); border:1px solid var(--border-dim);
+      color:var(--text); padding:0.85rem 1rem;
+      font-family:'Outfit',sans-serif; font-size:0.88rem;
+      outline:none; transition:border-color 0.3s; resize:none; appearance:none;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus { border-color:var(--gold); }
+    .form-group input::placeholder,
+    .form-group textarea::placeholder { color:var(--text-dim); }
+    .form-row { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+    .form-submit {
+      font-family:'DM Mono',monospace; font-size:0.72rem;
+      letter-spacing:0.14em; text-transform:uppercase;
+      padding:1rem 2rem; background:var(--gold); color:#fff;
+      border:none; cursor:none; font-weight:500;
+      transition:all 0.3s; margin-top:0.5rem;
+    }
+    .form-submit:hover { background:var(--gold-light); }
+
+    /* ── FOOTER ── */
+    footer {
+      background:var(--bg3); border-top:1px solid var(--border-dim);
+      padding:2.5rem 4rem;
+      display:flex; align-items:center; justify-content:space-between;
+    }
+    .footer-copy {
+      font-family:'DM Mono',monospace; font-size:0.62rem;
+      letter-spacing:0.1em; color:var(--text-dim);
+    }
+    .footer-logo { font-family:'Cormorant Garamond',serif; font-size:1.2rem; color:var(--gold); font-weight:600; }
+    .footer-links { display:flex; gap:1.8rem; list-style:none; }
+    .footer-links a {
+      font-family:'DM Mono',monospace; font-size:0.6rem;
+      letter-spacing:0.12em; text-transform:uppercase;
+      color:var(--text-dim); text-decoration:none; transition:color 0.3s;
+    }
+    .footer-links a:hover { color:var(--gold); }
+
+    /* ── SCROLL REVEAL ── */
+    .reveal {
+      opacity:0; transform:translateY(30px);
+      transition:opacity 0.8s cubic-bezier(0.4,0,0.2,1), transform 0.8s cubic-bezier(0.4,0,0.2,1);
+    }
+    .reveal.visible        { opacity:1; transform:translateY(0); }
+    .reveal-delay-1        { transition-delay:0.1s; }
+    .reveal-delay-2        { transition-delay:0.2s; }
+    .reveal-delay-3        { transition-delay:0.3s; }
+    .reveal-delay-4        { transition-delay:0.4s; }
+
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar       { width:4px; }
+    ::-webkit-scrollbar-track { background:var(--bg); }
+    ::-webkit-scrollbar-thumb { background:var(--gold); }
+
+    /* ── SELECTION ── */
+    ::selection { background:rgba(168,131,42,0.15); color:var(--gold); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width:900px) {
+      nav  { padding:1rem 1.5rem; }
+      .nav-links { display:none; }
+      section { padding:5rem 1.5rem; }
+      #hero   { padding:0 1.5rem; }
+      .about-grid, .algo-grid, .contact-grid { grid-template-columns:1fr; gap:3rem; }
+      .services-grid { grid-template-columns:1fr; }
+      .reports-grid  { grid-template-columns:1fr; }
+      .report-card.featured { grid-row:auto; }
+      .quant-stat-band { grid-template-columns:1fr 1fr; }
+      .quant-features { grid-template-columns:1fr; }
+      footer { flex-direction:column; gap:1rem; text-align:center; }
     }
   </style>
 </head>
 <body>
-  <div class="bulb">💡</div>
-  <h2>Stay Tuned</h2>
-  <h1>Coming<br>Soon</h1>
 
-  <div class="footer">
-    <a href="https://x.com/vikrampartap_" target="_blank">x.com/vikrampartap_</a><br>
-    <a href="mailto:vikrampartap@gmail.com">vikrampartap@gmail.com</a>
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">VP</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#reports">Reports</a></li>
+    <li><a href="#quant">Quant</a></li>
+    <li><a href="#algo">Development</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a class="nav-cta" href="#contact">Engage</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="grid-lines"></div>
+  <div class="particles" id="particles"></div>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow reveal">
+      <div class="eyebrow-line"></div>
+      <span>Market Research &middot; Data &middot; Development</span>
+    </div>
+    <h1 class="hero-title reveal reveal-delay-1">
+      <em>Vikram</em>
+      <span class="line2">Partap</span>
+    </h1>
+    <p class="hero-subtitle reveal reveal-delay-2">
+      Independent research analyst delivering data-driven intelligence across global markets combined with Python-based analytics, data generation, and design solutions.
+    </p>
+    <div class="hero-tags reveal reveal-delay-3">
+      <span class="hero-tag">Market Research</span>
+      <span class="hero-tag">Data Generation</span>
+      <span class="hero-tag">Python Development</span>
+      <span class="hero-tag">Quantitative Analysis</span>
+      <span class="hero-tag">Graphic Design</span>
+      <span class="hero-tag">Web Development</span>
+    </div>
+    <div class="hero-ctas reveal reveal-delay-4">
+      <a href="#reports" class="btn-primary">View Research</a>
+      <a href="#contact" class="btn-secondary">
+        Engage Privately
+        <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" stroke-width="1.5">
+          <line x1="5" y1="12" x2="19" y2="12"/>
+          <polyline points="12 5 19 12 12 19"/>
+        </svg>
+      </a>
+    </div>
   </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-label"><span>About</span></div>
+  <h2 class="section-title reveal">The Analyst Behind<br><em>the Intelligence</em></h2>
+  <div class="about-grid">
+    <div class="about-left">
+      <div class="about-portrait reveal">
+        <div class="portrait-initials">VP</div>
+        <div class="portrait-corner tl"></div>
+        <div class="portrait-corner br"></div>
+      </div>
+      <div class="about-stat-row reveal reveal-delay-1">
+        <div class="about-stat">
+          <div class="about-stat-num">6+</div>
+          <div class="about-stat-label">Markets</div>
+        </div>
+        <div class="about-stat">
+          <div class="about-stat-num">&#8734;</div>
+          <div class="about-stat-label">Curiosity</div>
+        </div>
+        <div class="about-stat">
+          <div class="about-stat-num">100%</div>
+          <div class="about-stat-label">Independent</div>
+        </div>
+      </div>
+    </div>
+    <div class="about-right">
+      <p class="reveal"><strong>Vikram Partap</strong> is an independent research analyst with deep expertise across global markets. He delivers institutional-grade market data and research to private clients and subscribers alike.</p>
+      <p class="reveal reveal-delay-1">His approach combines <strong>fundamental macroeconomic analysis</strong> with quantitative modelling &mdash; including Python-based data models and automation tools &mdash; to uncover insights that conventional analysis overlooks.</p>
+      <p class="reveal reveal-delay-2">Beyond research, Vikram builds custom Python tools and data pipelines, and designs websites and visual assets &mdash; bridging analytical rigour with practical software and design execution.</p>
+      <div class="skills-grid reveal reveal-delay-3">
+        <div class="skill-chip"><div class="skill-dot"></div><span>Fundamental Analysis</span></div>
+        <div class="skill-chip"><div class="skill-dot"></div><span>Data Analysis</span></div>
+        <div class="skill-chip"><div class="skill-dot"></div><span>Python / Quantitative</span></div>
+        <div class="skill-chip"><div class="skill-dot"></div><span>Software Development</span></div>
+        <div class="skill-chip"><div class="skill-dot"></div><span>Graphic &amp; Web Design</span></div>
+        <div class="skill-chip"><div class="skill-dot"></div><span>Data Generation</span></div>
+        <div class="skill-chip"><div class="skill-dot"></div><span>Macro Research</span></div>
+        <div class="skill-chip"><div class="skill-dot"></div><span>Client Reporting</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="section-label"><span>Services</span></div>
+  <h2 class="section-title reveal">What I<br><em>Deliver</em></h2>
+  <div class="services-grid reveal reveal-delay-1">
+    <div class="service-card">
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24"><path d="M2 20h20M6 20V10M10 20V4M14 20V12M18 20V7"/></svg>
+      </div>
+      <div class="service-num">01</div>
+      <div class="service-name">Market Research Reports</div>
+      <div class="service-desc">Comprehensive published reports covering macro trends, sector deep-dives, and price action analysis across global markets. Delivered periodically to subscribers.</div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+      </div>
+      <div class="service-num">02</div>
+      <div class="service-name">Bespoke Client Research</div>
+      <div class="service-desc">Tailored, confidential research commissioned by private clients. Custom scope, custom cadence &mdash; intelligence built around your specific market thesis or mandate.</div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+      </div>
+      <div class="service-num">03</div>
+      <div class="service-name">Python Development</div>
+      <div class="service-desc">Custom Python tools for data collection, analysis, and automation &mdash; built for clients who need reliable, well-documented, and maintainable code.</div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+      </div>
+      <div class="service-num">04</div>
+      <div class="service-name">Data Generation &amp; Analytics</div>
+      <div class="service-desc">Structured datasets, statistical modelling, and analytical pipelines &mdash; turning raw market data into clean, usable, decision-ready information.</div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+      </div>
+      <div class="service-num">05</div>
+      <div class="service-name">Quantitative Modelling</div>
+      <div class="service-desc">Statistical and data-driven models built in Python to identify patterns, test hypotheses, and validate research findings — all within a simulated research environment.</div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </div>
+      <div class="service-num">06</div>
+      <div class="service-name">Graphic &amp; Web Design</div>
+      <div class="service-desc">Clean, responsive websites and visual assets &mdash; from brand-aligned design systems to fully built, interactive single-page sites.</div>
+    </div>
+  </div>
+</section>
+
+<!-- REPORTS -->
+<section id="reports">
+  <div class="section-label"><span>Insights</span></div>
+  <h2 class="section-title reveal">Research &amp;<br><em>Publications</em></h2>
+  <div class="reports-grid reveal reveal-delay-1">
+    <div class="report-card featured">
+      <div class="report-tag">Featured Report</div>
+      <div class="report-title">Gold&rsquo;s Structural Bull Case &mdash; Why the Metal is Repricing for a New Era</div>
+      <div class="report-meta">Metals &middot; Q2 2024 &middot; 42 pages</div>
+      <div class="report-divider"></div>
+      <div class="report-desc">A deep macroeconomic analysis of the forces driving gold&rsquo;s secular re-rating: central bank accumulation, de-dollarisation, real yield compression, and geopolitical fragmentation. This report provides a 12&ndash;24 month outlook framework and key scenarios for research reference.</div>
+      <div class="report-desc">Includes demand-supply modelling and cross-asset correlation analysis, built on proprietary data pipelines.</div>
+      <a href="#contact" class="report-link">Request Full Report &rarr;</a>
+    </div>
+    <div class="report-card">
+      <div class="report-tag">Equities</div>
+      <div class="report-title">Indian Banking Sector: Post-Rate Cycle Opportunities</div>
+      <div class="report-meta">Stocks &middot; Q1 2024 &middot; 28 pages</div>
+      <div class="report-desc">Sector-wide analysis of listed Indian banks as the RBI rate cycle matures &mdash; NIM trends, credit quality, and valuation re-rating potential.</div>
+      <a href="#contact" class="report-link">Request &rarr;</a>
+    </div>
+    <div class="report-card">
+      <div class="report-tag">Data &amp; Analytics</div>
+      <div class="report-title">Commodity Demand Forecasting: A Data-Driven Model</div>
+      <div class="report-meta">Data Science &middot; Q1 2024 &middot; 18 pages</div>
+      <div class="report-desc">A statistical modelling report examining commodity demand signals through structured data generation, historical pattern analysis, and Python-based forecasting tools.</div>
+      <a href="#contact" class="report-link">Request &rarr;</a>
+    </div>
+    <div class="report-card" style="grid-column:1/-1; border-top:none;">
+      <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem;">
+        <div>
+          <div class="report-tag">Commodities</div>
+          <div class="report-title" style="font-size:1.2rem; margin-top:0.4rem;">Crude Oil: OPEC+ Dynamics &amp; the Energy Transition Trade-Off</div>
+        </div>
+        <a href="#contact" class="report-link">Request Full Report &rarr;</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUANT -->
+<section id="quant">
+  <div class="section-label"><span>Quant</span></div>
+  <h2 class="section-title reveal">Quantitative<br><em>Research</em></h2>
+  <p class="quant-intro reveal reveal-delay-1">Every model starts as a hypothesis and ends as a dataset. Python-based quantitative research &mdash; built, stress-tested, and iterated entirely within a simulated environment before any conclusion is drawn or reported.</p>
+
+  <div class="quant-stat-band reveal reveal-delay-2">
+    <div class="quant-stat-card">
+      <div class="quant-stat-num">100%</div>
+      <div class="quant-stat-label">Simulated Environment Testing</div>
+    </div>
+    <div class="quant-stat-card">
+      <div class="quant-stat-num">15+</div>
+      <div class="quant-stat-label">Models Built &amp; Validated</div>
+    </div>
+    <div class="quant-stat-card">
+      <div class="quant-stat-num">1000s</div>
+      <div class="quant-stat-label">Data Points Processed</div>
+    </div>
+    <div class="quant-stat-card">
+      <div class="quant-stat-num">6+</div>
+      <div class="quant-stat-label">Markets Researched</div>
+    </div>
+  </div>
+
+  <div class="quant-features reveal reveal-delay-3">
+    <div class="quant-feature">
+      <div class="quant-feature-icon">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 12h8M12 8v8"/></svg>
+      </div>
+      <div class="quant-feature-title">Simulated Environment Testing</div>
+      <div class="quant-feature-desc">Every model is built and iterated inside a sandboxed, simulated environment &mdash; using historical and synthetic datasets, never live capital &mdash; so ideas can be broken, refined, and rebuilt without real-world consequence.</div>
+    </div>
+    <div class="quant-feature">
+      <div class="quant-feature-icon">
+        <svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 14l4-4 3 3 5-6"/></svg>
+      </div>
+      <div class="quant-feature-title">Simulated Environment Performance</div>
+      <div class="quant-feature-desc">Performance is tracked purely as research output &mdash; statistical accuracy, stability, and consistency within the simulation &mdash; giving a clear read on a model&rsquo;s behaviour before it ever informs a report.</div>
+    </div>
+    <div class="quant-feature">
+      <div class="quant-feature-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 20V10M6 20V4M18 20v-6"/></svg>
+      </div>
+      <div class="quant-feature-title">Statistical Validation</div>
+      <div class="quant-feature-desc">Correlation analysis, distribution testing, and walk-forward checks using pandas, NumPy, and SciPy &mdash; ensuring every finding holds up before it reaches a client or a report.</div>
+    </div>
+  </div>
+
+  <div class="quant-note reveal reveal-delay-4">
+    All figures above reflect research activity within a simulated / sandboxed data environment and do not represent real investment performance, or financial advice.
+  </div>
+</section>
+
+<!-- ALGO & PE -->
+<section id="algo">
+  <div class="algo-bg-code">import pandas as pd
+import numpy as np
+from scipy import stats
+
+class DataResearchEngine:
+    def __init__(self, source_path):
+        self.source_path = source_path
+
+    def clean_dataset(self, df):
+        df = df.dropna().reset_index(drop=True)
+        df['volatility'] = df['close'].pct_change().rolling(14).std()
+        return df
+
+    def correlation_matrix(self, df, columns):
+        return df[columns].corr(method='pearson')
+
+    def generate_report_stats(self, df):
+        summary = {
+            'mean_return': df['close'].pct_change().mean(),
+            'volatility': df['close'].pct_change().std(),
+            'skew': stats.skew(df['close'].pct_change().dropna())
+        }
+        return summary</div>
+
+  <div class="section-label"><span>Python &amp; Development</span></div>
+  <h2 class="section-title reveal">Data &amp;<br><em>Development</em></h2>
+  <div class="algo-grid">
+    <div class="code-window reveal">
+      <div class="code-titlebar">
+        <div class="code-dot r"></div>
+        <div class="code-dot y"></div>
+        <div class="code-dot g"></div>
+        <span class="code-filename">data_research_engine.py</span>
+      </div>
+      <div class="code-body">
+        <span class="kw">import</span> pandas <span class="kw">as</span> pd<br>
+        <span class="kw">import</span> numpy <span class="kw">as</span> np<br><br>
+        <span class="kw">class</span> <span class="cl">DataResearchEngine</span>:<br>
+        &nbsp;&nbsp;<span class="kw">def</span> <span class="fn">__init__</span>(self, source_path):<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;self.source_path = source_path<br><br>
+        &nbsp;&nbsp;<span class="kw">def</span> <span class="fn">clean_dataset</span>(self, df):<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;df = df.dropna().reset_index(<span class="kw">drop</span>=<span class="cl">True</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;df[<span class="str">'volatility'</span>] = df[<span class="str">'close'</span>]<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.pct_change().rolling(<span class="num">14</span>).std()<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">return</span> df<br><br>
+        &nbsp;&nbsp;<span class="kw">def</span> <span class="fn">correlation_matrix</span>(self, df, cols):<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">return</span> df[cols].corr(method=<span class="str">'pearson'</span>)<br><br>
+        <span class="cm"># Output: cleaned dataset + summary stats</span>
+      </div>
+    </div>
+    <div class="algo-features reveal reveal-delay-1">
+      <div class="algo-feature">
+        <div class="algo-feature-icon">
+          <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        </div>
+        <div>
+          <div class="algo-feature-title">Python Automation</div>
+          <div class="algo-feature-desc">Custom Python scripts and tools built from scratch &mdash; data cleaning, pipeline automation, and report generation across different datasets.</div>
+        </div>
+      </div>
+      <div class="algo-feature">
+        <div class="algo-feature-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 20V10M6 20V4M18 20v-6"/></svg>
+        </div>
+        <div>
+          <div class="algo-feature-title">Quantitative Research</div>
+          <div class="algo-feature-desc">Statistical analysis, factor modelling, and data research using pandas, NumPy, and SciPy. Research-grade code translated into clear analytical reports.</div>
+        </div>
+      </div>
+      <div class="algo-feature">
+        <div class="algo-feature-icon">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6M9 12h6M9 15h4"/></svg>
+        </div>
+        <div>
+          <div class="algo-feature-title">Data Generation &amp; Structuring</div>
+          <div class="algo-feature-desc">Building clean, structured datasets from raw market information &mdash; organised for downstream analysis, reporting, and client delivery.</div>
+        </div>
+      </div>
+      <div class="algo-feature">
+        <div class="algo-feature-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <div>
+          <div class="algo-feature-title">Graphic &amp; Web Design</div>
+          <div class="algo-feature-desc">Responsive websites, dashboards, and visual assets designed and built end-to-end &mdash; from concept through to a polished, live site.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-bg"></div>
+  <div class="section-label"><span>Contact</span></div>
+  <h2 class="section-title reveal">Start a<br><em>Conversation</em></h2>
+  <div class="contact-grid">
+    <div class="contact-left reveal">
+      <p>Whether you&rsquo;re a private client, institutional subscriber, or business needing custom software or design work &mdash; I&rsquo;m available for bespoke research mandates, data projects, and development partnerships.</p>
+      <div class="contact-item">
+        <div class="contact-item-icon">
+          <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </div>
+        <div>
+          <div class="contact-item-label">Email</div>
+          <a href="mailto:me@vikrampartap.com" class="contact-item-val">vikram&#64;vikrampartap.com</a>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-item-icon">
+          <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        </div>
+        <div>
+          <div class="contact-item-label">Website</div>
+          <a href="https://vikrampartap.com" class="contact-item-val">vikrampartap.com</a>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-item-icon">
+          <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.1 19.79 19.79 0 0 1 1.61 4.47 2 2 0 0 1 3.6 2.27h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.18 6.18l.91-.91a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 21.73 17z"/></svg>
+        </div>
+        <div>
+          <div class="contact-item-label">Availability</div>
+          <span class="contact-item-val">Open to new mandates</span>
+        </div>
+      </div>
+    </div>
+    <div class="contact-form reveal reveal-delay-1">
+      <div class="form-row">
+        <div class="form-group">
+          <label>First Name</label>
+          <input type="text" placeholder="First name"/>
+        </div>
+        <div class="form-group">
+          <label>Last Name</label>
+          <input type="text" placeholder="Last name"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Email Address</label>
+        <input type="email" placeholder="your@email.com"/>
+      </div>
+      <div class="form-group">
+        <label>Enquiry Type</label>
+        <select>
+          <option value="" disabled selected>Select a service...</option>
+          <option>Bespoke Market Research</option>
+          <option>Report Subscription</option>
+          <option>Python Development</option>
+          <option>Data Generation &amp; Analytics</option>
+          <option>Graphic &amp; Web Design</option>
+          <option>General Inquiry</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Message</label>
+        <textarea rows="5" placeholder="Describe your requirements or the market you would like researched..."></textarea>
+      </div>
+      <button class="form-submit" id="submitBtn">Send Message</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-copy">&copy; 2026 Vikram Partap. All rights reserved.</div>
+  <div class="footer-logo">VP</div>
+  <ul class="footer-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="https://vikrampartap.com">vikrampartap.com</a></li>
+  </ul>
+</footer>
+
+<script>
+(function() {
+
+  /* ── CURSOR ── */
+  var cur  = document.getElementById('cursor');
+  var ring = document.getElementById('cursor-ring');
+  var mx = 0, my = 0, rx = 0, ry = 0;
+
+  document.addEventListener('mousemove', function(e) {
+    mx = e.clientX; my = e.clientY;
+    cur.style.transform = 'translate(' + (mx - 5) + 'px,' + (my - 5) + 'px)';
+  });
+
+  function animRing() {
+    rx += (mx - rx - 18) * 0.12;
+    ry += (my - ry - 18) * 0.12;
+    ring.style.transform = 'translate(' + rx + 'px,' + ry + 'px)';
+    requestAnimationFrame(animRing);
+  }
+  animRing();
+
+  document.querySelectorAll('a, button, .service-card, .algo-feature, .quant-feature, .hero-tag').forEach(function(el) {
+    el.addEventListener('mouseenter', function() { document.body.classList.add('cursor-hover'); });
+    el.addEventListener('mouseleave', function() { document.body.classList.remove('cursor-hover'); });
+  });
+
+  /* ── PARTICLES ── */
+  var pc = document.getElementById('particles');
+  for (var i = 0; i < 30; i++) {
+    var p = document.createElement('div');
+    p.className = 'particle';
+    p.style.cssText =
+      'left:' + (Math.random() * 100) + '%;' +
+      'top:'  + (40 + Math.random() * 50) + '%;' +
+      '--dur:' + (4 + Math.random() * 6) + 's;' +
+      '--delay:' + (Math.random() * 6) + 's;' +
+      '--dx:' + ((Math.random() - 0.5) * 60) + 'px;';
+    pc.appendChild(p);
+  }
+
+  /* ── SCROLL REVEAL ── */
+  var revealObs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) { e.target.classList.add('visible'); }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(function(el) { revealObs.observe(el); });
+
+  /* ── FORM SUBMIT ── */
+  document.getElementById('submitBtn').addEventListener('click', function() {
+    var btn = this;
+    btn.textContent = 'Message Sent \u2713';
+    btn.style.background = '#2a7a4a';
+    setTimeout(function() {
+      btn.textContent = 'Send Message';
+      btn.style.background = '';
+    }, 3000);
+  });
+
+  /* ── NAV SCROLL ── */
+  window.addEventListener('scroll', function() {
+    document.querySelector('nav').style.background =
+      window.scrollY > 60 ? 'rgba(245,242,235,0.97)' : 'rgba(245,242,235,0.85)';
+  });
+
+  /* ── MAGNETIC BUTTONS ── */
+  document.querySelectorAll('.btn-primary, .nav-cta').forEach(function(btn) {
+    btn.addEventListener('mousemove', function(e) {
+      var r = btn.getBoundingClientRect();
+      var x = e.clientX - r.left - r.width  / 2;
+      var y = e.clientY - r.top  - r.height / 2;
+      btn.style.transform = 'translate(' + (x * 0.15) + 'px,' + (y * 0.25) + 'px)';
+    });
+    btn.addEventListener('mouseleave', function() { btn.style.transform = ''; });
+  });
+
+  /* ── SMOOTH SCROLL ── */
+  document.querySelectorAll('a[href^="#"]').forEach(function(a) {
+    a.addEventListener('click', function(e) {
+      var target = document.querySelector(a.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  });
+
+})();
+</script>
 </body>
 </html>
